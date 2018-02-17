@@ -2319,17 +2319,12 @@ void WorldObject::MovePosition(Position &pos, float dist, float angle)
 float WorldObject::SelectBestZForDestination(float x, float y, float z, bool excludeCollisionHeight) const
 {
     if (Unit const* unit = ToUnit())
-<<<<<<< HEAD
-        if (unit->CanFly())
-            return z;
-=======
     {
         float const ground = GetFloorZ();
         bool const isInAir = (G3D::fuzzyGt(unit->GetPositionZMinusOffset(), ground + GROUND_HEIGHT_TOLERANCE) || G3D::fuzzyLt(unit->GetPositionZMinusOffset(), ground - GROUND_HEIGHT_TOLERANCE));
         if (unit->IsFlying() && isInAir)
             return z;
     }
->>>>>>> 7e71b4535a0e927ecdee30489e5a3c0b6f247559
 
     float myX, myY, myZ;
     GetPosition(myX, myY, myZ);
@@ -2338,13 +2333,8 @@ float WorldObject::SelectBestZForDestination(float x, float y, float z, bool exc
     float const destCollisionHeight = excludeCollisionHeight ? 0.0f : myCollisionHeight;
 
     float const myGridHeight = GetMap()->GetGridMapHeight(myX, myY);
-<<<<<<< HEAD
-    float const myVmapFloor = std::max(GetMap()->GetVMapFloor(myX, myY, myZ, 150.0f, GetCollisionHeight()),
-        GetMap()->GetGameObjectFloor(GetPhaseMask(), myX, myY, myZ, 150.0f, GetCollisionHeight()));
-=======
     float const myVmapFloor = std::max(GetMap()->GetVMapFloor(myX, myY, myZ, 150.0f, myCollisionHeight),
         GetMap()->GetGameObjectFloor(GetPhaseMask(), myX, myY, myZ, 150.0f, myCollisionHeight));
->>>>>>> 7e71b4535a0e927ecdee30489e5a3c0b6f247559
 
     // which of these 3 do I want ?
     float const destGridHeight = GetMap()->GetGridMapHeight(x, y);
